@@ -1,0 +1,40 @@
+#Mario Chirinos Colunga
+#--------------------------------------
+APPNAME = libADT_Rovio
+#Compiler:
+	CC=g++
+	MAKELIB=ar rcs
+	OPT= 
+	LIBEXT=.a
+
+#Compiler flags
+	CFLAGS=-c -g -Wall
+#Directories
+		INCLUIDES=$(shell pkg-config --cflags gtk+-2.0 libgnomeui-2.0 gstreamer-0.10 gstreamer-plugins-base-0.10)
+		DIRlib= /usr/local/lib	
+		incDIR= /usr/local/include
+#--------------------------------------
+all: Project
+
+Project: rovioStreaming.o  ADT_rovioAPI.o rovioSpeak.o
+	$(MAKELIB) $(APPNAME)$(LIBEXT) \
+	rovioStreaming.o \
+	ADT_rovioAPI.o \
+	rovioSpeak.o
+
+ADT_rovioAPI.o: ADT_rovioAPI.cpp
+	$(CC) $(INCLUIDES) $(CFLAGS) \
+	ADT_rovioAPI.cpp 
+	
+rovioStreaming.o: rovioStreaming.cpp
+	$(CC) $(INCLUIDES) $(CFLAGS) \
+	rovioStreaming.cpp
+
+rovioSpeak.o: rovioSpeak.cpp
+	$(CC) $(INCLUIDES) $(CFLAGS) \
+	-I $(incDIR) \
+	rovioSpeak.cpp
+
+#ar rcs libfunc.a func1.o func2.o func3.o
+#g++ -o exe_file exe_file.o -L. -lfunc
+
